@@ -1,6 +1,6 @@
-package org.capgemini.gestor.expediente;
+package org.capgemini.gestor.expediente.entity;
 
-import org.capgemini.gestor.Expediente;
+import org.capgemini.gestor.entity.Expediente;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ public class CreacionExpedienteTest {
         String descripcionValida = "Descripcion valida";
         LocalDate fechaSesionValida = LocalDate.now();
         String codigoUnidad = "L9898897";
-        int expedienteId = 1;
+        String expedienteId = "cb2d1a53-4ef1-4ee9-9f8c-6d35a741dafb";
 
         Expediente expediente = new Expediente(expedienteId, codigoUnidad, fechaSesionValida, descripcionValida);
 
@@ -25,6 +25,6 @@ public class CreacionExpedienteTest {
 
     @Test
     public void fallaAlCrearExpedienteConFechaFutura() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Expediente(1, "L9898897", LocalDate.now().plusDays(10), "Descripcion Valida"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Expediente("cb2d1a53-4ef1-4ee9-9f8c-6d35a741dafb", "L9898897", LocalDate.now().plusDays(10), "Descripcion Valida"));
     }
 }

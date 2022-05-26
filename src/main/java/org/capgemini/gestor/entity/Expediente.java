@@ -1,16 +1,16 @@
-package org.capgemini.gestor;
+package org.capgemini.gestor.entity;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Expediente {
-    private int expedienteId;
+    private String expedienteId;
     private String unidad;
     private LocalDate fechaSesion;
     private String descripcion;
     private String estado;
 
-    public Expediente(int expedienteId, String unidad, LocalDate fechaSesion, String descripcion) {
+    public Expediente(String expedienteId, String unidad, LocalDate fechaSesion, String descripcion) {
         if (!unidad.matches("[A-Z][0-9]{7}")) {
             throw new IllegalArgumentException("Código de unidad no válido: "+unidad);
         }
@@ -30,7 +30,7 @@ public class Expediente {
         this.estado = "inicial";
     }
 
-    public int getExpedienteId() {
+    public String getExpedienteId() {
         return expedienteId;
     }
 
@@ -74,7 +74,7 @@ public class Expediente {
         if (this==o) return true;
         if (o==null || getClass()!=o.getClass()) return false;
         Expediente that = (Expediente) o;
-        return getExpedienteId()==that.getExpedienteId() && Objects.equals(getUnidad(), that.getUnidad()) && Objects.equals(getFechaSesion(), that.getFechaSesion()) && Objects.equals(getDescripcion(), that.getDescripcion()) && Objects.equals(getEstado(), that.getEstado());
+        return Objects.equals(getExpedienteId(), that.getExpedienteId()) && Objects.equals(getUnidad(), that.getUnidad()) && Objects.equals(getFechaSesion(), that.getFechaSesion()) && Objects.equals(getDescripcion(), that.getDescripcion()) && Objects.equals(getEstado(), that.getEstado());
     }
 
     @Override
