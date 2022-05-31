@@ -18,11 +18,12 @@ public class CreacionExpedienteUseCase {
     public Expediente execute(String uuid, String codigoUnidad, LocalDate fechaSesion, String descripcion) throws IOException {
         Expediente expediente = new Expediente(uuid, codigoUnidad, fechaSesion, descripcion);
 
+        if(expedienteRepository.find(uuid)!=null){
+            throw new ExpedienteDuplicado();
+        }
+
         expedienteRepository.saveExpediente(expediente);
 
         return expediente;
     }
-
-
-
 }

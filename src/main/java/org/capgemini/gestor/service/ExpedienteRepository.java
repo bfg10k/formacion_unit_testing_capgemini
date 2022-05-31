@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ExpedienteRepository {
     void saveExpediente(Expediente expediente) throws IOException;
+
+    Expediente find(String uuid) throws IOException;
 }

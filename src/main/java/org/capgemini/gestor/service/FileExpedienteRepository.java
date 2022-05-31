@@ -27,6 +27,11 @@ public class FileExpedienteRepository implements ExpedienteRepository {
         Files.writeString(Paths.get("C:\\Users\\marcos\\gestor-documentos\\expedientes.json"), gson.toJson(persistedExpedientes));
     }
 
+    @Override
+    public Expediente find(String uuid) throws IOException {
+        return getExpedientes().stream().filter(expediente -> expediente.getExpedienteId().equals(uuid)).findFirst().orElse(null);
+    }
+
     private List<Expediente> getExpedientes() throws IOException {
         String text = Files.readString(Paths.get("C:\\Users\\marcos\\gestor-documentos\\expedientes.json"));
         Type persistedExpedientesType = new TypeToken<ArrayList<Expediente>>() {
