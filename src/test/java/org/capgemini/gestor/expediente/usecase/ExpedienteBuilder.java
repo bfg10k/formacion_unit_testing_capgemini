@@ -1,6 +1,7 @@
 package org.capgemini.gestor.expediente.usecase;
 
 import org.capgemini.gestor.entity.Expediente;
+import org.capgemini.gestor.entity.ExpedienteId;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ public class ExpedienteBuilder {
         this.uuid = "4c737a3f-aeab-4676-bfe4-70fac755d5ed";
         this.unidad = "L9898989";
         this.fechaSesion = LocalDate.now();
-        this.descripcion = "Una descripción válida";
+        this.descripcion = "Una";
         this.estado = "inicial";
     }
 
@@ -27,6 +28,11 @@ public class ExpedienteBuilder {
     }
 
     public Expediente build() {
-        return new Expediente(this.uuid, this.unidad, this.fechaSesion, this.descripcion);
+        return new Expediente(new ExpedienteId(this.uuid), this.unidad, this.fechaSesion, this.descripcion);
+    }
+
+    public ExpedienteBuilder withEstado(String nuevoEstado) {
+        this.estado = nuevoEstado;
+        return this;
     }
 }

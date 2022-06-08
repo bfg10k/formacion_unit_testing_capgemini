@@ -1,22 +1,36 @@
 package org.capgemini.gestor.expediente.entity;
 
 import org.capgemini.gestor.entity.Expediente;
+import org.capgemini.gestor.entity.ExpedienteId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
 public class CreacionExpedienteTest {
-    @Test
-    public void puedoCrearExpedienteConDatosValidos() {
-        String descripcionValida = "Descripcion valida";
-        LocalDate fechaSesionValida = LocalDate.now();
-        String codigoUnidad = "L9898897";
-        String expedienteId = "cb2d1a53-4ef1-4ee9-9f8c-6d35a741dafb";
+    public static Stream<Arguments> datosValidosExpediente() {
 
-        Expediente expediente = new Expediente(expedienteId, codigoUnidad, fechaSesionValida, descripcionValida);
+        return Stream.of(
+                Arguments.of("cb2d1a53-4ef1-4ee9-9f8c-6d35a741dafb", "L9898897", LocalDate.now(), "Descripción Válida"),
+                Arguments.of("cb2d1a53-4ef1-4ee9-9f8c-6d35a741d2fb", "L9898899", LocalDate.now().minusDays(10), ""),
+                Arguments.of("cb2d1a53-4ef1-4ee9-9f8c-6d35a741d2fb", "L9898899", LocalDate.now().minusDays(100), "Descripción VálidaaaDescripción VálidaaaDescripción Válidaaa"),
+                Arguments.of("cb2d1a53-4ef1-4ee9-9f8c-6d35a741d2fb", "L9898899", LocalDate.now().minusDays(1000), "Descripción Válidaaa"),
+                Arguments.of("cb2d1a53-4ef1-4ee9-9f8c-6d35a741d2fb", "L9898899", LocalDate.now().minusDays(2034044), "Descripción Válidaaa")
+        );
+    }
 
-        Assertions.assertEquals(expedienteId, expediente.getExpedienteId());
+    @ParameterizedTest
+    @MethodSource("datosValidosExpediente")
+    public void puedoCrearExpedienteConDatosValidos(String expedienteId, String codigoUnidad, LocalDate fechaSesionValida, String descripcionValida) {
+        Expediente expediente = new Expediente(new ExpedienteId(expedienteId), codigoUnidad, fechaSesionValida, descripcionValida);
+
+        Assertions.assertEquals(new ExpedienteId(expedienteId), expediente.getExpedienteId());
         Assertions.assertEquals(codigoUnidad, expediente.getUnidad());
         Assertions.assertEquals(fechaSesionValida, expediente.getFechaSesion());
         Assertions.assertEquals(descripcionValida, expediente.getDescripcion());
@@ -25,6 +39,6 @@ public class CreacionExpedienteTest {
 
     @Test
     public void fallaAlCrearExpedienteConFechaFutura() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Expediente("cb2d1a53-4ef1-4ee9-9f8c-6d35a741dafb", "L9898897", LocalDate.now().plusDays(10), "Descripcion Valida"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Expediente(new ExpedienteId("cb2d1a53-4ef1-4ee9-9f8c-6d35a741dafb"), "L9898897", LocalDate.now().plusDays(10), "Descripcion Valida"));
     }
 }

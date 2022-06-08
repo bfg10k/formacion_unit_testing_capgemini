@@ -7,4 +7,8 @@ public class ExpedienteMother {
     public static Expediente withUuid(String uuidDuplicado) {
         return new ExpedienteBuilder().withUuid(uuidDuplicado).build();
     }
+
+    public static Expediente enTramite() {
+        return new ExpedienteBuilder().withEstado("en_tramite").build();
+    }
 }

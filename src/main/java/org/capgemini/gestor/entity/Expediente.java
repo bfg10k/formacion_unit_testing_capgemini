@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Expediente {
-    private String expedienteId;
+    private ExpedienteId expedienteId;
     private String unidad;
     private LocalDate fechaSesion;
     private String descripcion;
     private String estado;
 
-    public Expediente(String expedienteId, String unidad, LocalDate fechaSesion, String descripcion) {
+    public Expediente(ExpedienteId expedienteId, String unidad, LocalDate fechaSesion, String descripcion) {
         if (!unidad.matches("[A-Z][0-9]{7}")) {
             throw new IllegalArgumentException("Código de unidad no válido: "+unidad);
         }
@@ -30,7 +30,7 @@ public class Expediente {
         this.estado = "inicial";
     }
 
-    public String getExpedienteId() {
+    public ExpedienteId getExpedienteId() {
         return expedienteId;
     }
 

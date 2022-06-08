@@ -1,6 +1,7 @@
 package org.capgemini.gestor.usecase;
 
 import org.capgemini.gestor.entity.Expediente;
+import org.capgemini.gestor.entity.ExpedienteId;
 import org.capgemini.gestor.service.ExpedienteRepository;
 import org.capgemini.gestor.service.FileExpedienteRepository;
 
@@ -16,7 +17,7 @@ public class CreacionExpedienteUseCase {
     }
 
     public Expediente execute(String uuid, String codigoUnidad, LocalDate fechaSesion, String descripcion) throws IOException {
-        Expediente expediente = new Expediente(uuid, codigoUnidad, fechaSesion, descripcion);
+        Expediente expediente = new Expediente(new ExpedienteId(uuid), codigoUnidad, fechaSesion, descripcion);
 
         if(expedienteRepository.find(uuid)!=null){
             throw new ExpedienteDuplicado();
